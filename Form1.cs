@@ -13,6 +13,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsPictureBox = System.Windows.Forms.PictureBox;
+using GunaPictureBox = Guna.UI2.WinForms.Suite.PictureBox;
+using Button = System.Windows.Forms.Button;
+using WPictureBox = System.Windows.Forms.PictureBox;
+using System.IO;
+
 
 namespace Puzzle_Game
 {
@@ -34,12 +40,15 @@ namespace Puzzle_Game
 
     public partial class Form1 : Form
     {
+
+        List<List<Button>> ImageButtonsList;
+
+        stGameSettings GameSettings;
+
         public Form1()
         {
             InitializeComponent();
         }
-
-        stGameSettings GameSettings;
 
         void SetGameSettings()
         {
@@ -47,22 +56,22 @@ namespace Puzzle_Game
             if (tsEasyMode.Checked)
             {
                 GameSettings = new stGameSettings(2, 2,
-                    Resources.oliver_guhr_Qs3ALnjkwF4_unsplash);
+                    Resources.Cat);
             }
             else if (tsMediumMode.Checked)
             {
                 GameSettings = new stGameSettings(3, 3,
-                    Resources.oliver_guhr_Qs3ALnjkwF4_unsplash);
+                    Resources.Cat);
             }
             else if (tsHardMode.Checked)
             {
                 GameSettings = new stGameSettings(4, 4,
-                    Resources.oliver_guhr_Qs3ALnjkwF4_unsplash);
+                    Resources.Cat);
             }
             else if (tsCustomMode.Checked)
             {
-                GameSettings = new stGameSettings(nudColumns.Value, nudRow.Value,
-                    Resources.oliver_guhr_Qs3ALnjkwF4_unsplash);
+                GameSettings = new stGameSettings(nudRows.Value, nudColumns.Value,
+                    Resources.Cat);
             }
 
         }
@@ -70,7 +79,7 @@ namespace Puzzle_Game
         void CustomSettingsVisible()
         {
             nudColumns.Visible =
-                nudRow.Visible =
+                nudRows.Visible =
                 btnGetUserImage.Visible =
                 lblRow.Visible =
                 lblColumns.Visible =
@@ -99,15 +108,101 @@ namespace Puzzle_Game
                 tsHardMode.Checked == tsCustomMode.Checked);
         }
 
-       void OpenGameScreen()
+       bool OpenGameScreen()
         {
 
             if (CheckMode())
+            {
                 tc.SelectTab(1);
+                return true;
+            }
             else
+            {
                 MessageBox.Show("Select Mode Required.", "Error Mode",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
 
+        }
+
+        Button CreateImageButton(Bitmap Image)
+        {
+
+            Button button = new Button();
+
+            button.BackgroundImage = Image;
+
+            button.BackgroundImageLayout = ImageLayout.Stretch;
+
+            button.Text = "";
+
+            button.FlatStyle = FlatStyle.Flat;
+
+            button.FlatAppearance.BorderColor = Color.Black;
+
+            button.FlatAppearance.BorderSize = 5;
+
+            return button;
+
+        }
+
+        void CreatePictureBoxesList()
+        {
+
+            ImageButtonsList = new List<List<Button>>();
+
+            int PartWidth = GameSettings.Image.Width / GameSettings.Columns;
+            int PartHeight = GameSettings.Image.Height / GameSettings.Rows;
+
+            //// Create a folder to save the split images
+            //string outputDir = $@"C:\Puzzle Game\Images\SplitImages\Grid_{GameSettings.Rows}_{GameSettings.Columns}";
+
+            //if (!Directory.Exists(outputDir))
+            //{
+            //    Directory.CreateDirectory(outputDir);
+            //}
+
+            for (int Row = 0; Row < GameSettings.Rows; Row++)
+            {
+
+                List<Button> RowList = new List<Button>();
+
+                for (int Column = 0; Column < GameSettings.Columns; Column++)
+                {
+
+                    // Define Rectangle For The Current Part Of Image
+                    Rectangle rectangle = new Rectangle(
+                        GameSettings.Image.Width / GameSettings.Columns * Column,
+                        GameSettings.Image.Height / GameSettings.Rows * Row,
+                        PartWidth, PartHeight);
+
+                    // Crop the image part
+                    Bitmap PartImage = GameSettings.Image.Clone(rectangle,
+                        GameSettings.Image.PixelFormat);
+
+                    Button ImageButton = CreateImageButton(PartImage);
+
+                    RowList.Add(ImageButton);
+
+                    //// Create Path For The Current Image Part
+                    //string PathToSave = Path.Combine(outputDir,
+                    //    $"Image_Part_{Row}_{Column}.jpg");
+
+                    //PartImage.Save(PathToSave);
+
+                    //PartImage.Dispose();
+
+                }
+
+                ImageButtonsList.Add(RowList);
+
+            }
+
+        }
+
+        void CreateGameMode()
+        {
+            CreatePictureBoxesList();
         }
 
         private void guna2GradientCircleButton1_Click(object sender, EventArgs e)
@@ -121,10 +216,7 @@ namespace Puzzle_Game
             Guna2ToggleSwitch toggleSwitch = sender as Guna2ToggleSwitch;
 
             if (toggleSwitch.Checked)
-            {
                 ToggleSwitchChecked((Guna2ToggleSwitch) sender);
-                SetGameSettings();
-            }
 
             if (toggleSwitch == tsCustomMode)
                 CustomSettingsVisible();
@@ -133,7 +225,13 @@ namespace Puzzle_Game
 
         private void btnStartGame_Click(object sender, EventArgs e)
         {
-            OpenGameScreen();
+
+            if (OpenGameScreen())
+            {
+                SetGameSettings();
+                CreateGameMode();
+            }
+
         }
 
     }

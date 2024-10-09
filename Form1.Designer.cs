@@ -40,7 +40,7 @@
             this.lblRow = new System.Windows.Forms.Label();
             this.btnGetUserImage = new Guna.UI2.WinForms.Guna2GradientButton();
             this.nudColumns = new CodeeloUI.Controls.CodeeloNumericUpDown();
-            this.nudRow = new CodeeloUI.Controls.CodeeloNumericUpDown();
+            this.nudRows = new CodeeloUI.Controls.CodeeloNumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -52,11 +52,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.GameScreen = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tlp = new System.Windows.Forms.TableLayoutPanel();
             this.guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             this.guna2DragControl1 = new Guna.UI2.WinForms.Guna2DragControl(this.components);
             this.guna2CustomGradientPanel2 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tc.SuspendLayout();
             this.MainMenu.SuspendLayout();
             this.cyberGroupBox1.SuspendLayout();
@@ -83,7 +83,7 @@
             // MainMenu
             // 
             this.MainMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(208)))), ((int)(((byte)(4)))));
-            this.MainMenu.BackgroundImage = global::Puzzle_Game.Properties.Resources.daniele_franchi_dt0yhDQmJ4k_unsplash;
+            this.MainMenu.BackgroundImage = global::Puzzle_Game.Properties.Resources.Main_Screen_Background;
             this.MainMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.MainMenu.Controls.Add(this.lblDesignerName);
             this.MainMenu.Controls.Add(this.lblTitle);
@@ -157,7 +157,7 @@
             this.cyberGroupBox1.Controls.Add(this.lblRow);
             this.cyberGroupBox1.Controls.Add(this.btnGetUserImage);
             this.cyberGroupBox1.Controls.Add(this.nudColumns);
-            this.cyberGroupBox1.Controls.Add(this.nudRow);
+            this.cyberGroupBox1.Controls.Add(this.nudRows);
             this.cyberGroupBox1.Controls.Add(this.label5);
             this.cyberGroupBox1.Controls.Add(this.label4);
             this.cyberGroupBox1.Controls.Add(this.label3);
@@ -237,7 +237,7 @@
             this.nudColumns.FillColorSecond = System.Drawing.Color.Blue;
             this.nudColumns.Font = new System.Drawing.Font("IOS 15 R SemiBold", 11F, System.Drawing.FontStyle.Bold);
             this.nudColumns.GradientDirection = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
-            this.nudColumns.Interval = 10;
+            this.nudColumns.Interval = 1;
             this.nudColumns.Location = new System.Drawing.Point(128, 302);
             this.nudColumns.MaxValue = 8;
             this.nudColumns.MinValue = 2;
@@ -250,29 +250,29 @@
             this.nudColumns.Value = 2;
             this.nudColumns.Visible = false;
             // 
-            // nudRow
+            // nudRows
             // 
-            this.nudRow.AccessibleRole = null;
-            this.nudRow.BackColor = System.Drawing.Color.Transparent;
-            this.nudRow.BackgroundImage = false;
-            this.nudRow.BackgroundImageLayout = false;
-            this.nudRow.CausesValidation = false;
-            this.nudRow.FillColor = System.Drawing.Color.MediumSlateBlue;
-            this.nudRow.FillColorSecond = System.Drawing.Color.Blue;
-            this.nudRow.Font = new System.Drawing.Font("IOS 15 R SemiBold", 11F, System.Drawing.FontStyle.Bold);
-            this.nudRow.GradientDirection = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
-            this.nudRow.Interval = 10;
-            this.nudRow.Location = new System.Drawing.Point(16, 302);
-            this.nudRow.MaxValue = 8;
-            this.nudRow.MinValue = 2;
-            this.nudRow.Name = "nudRow";
-            this.nudRow.Radius = 15;
-            this.nudRow.Size = new System.Drawing.Size(100, 32);
-            this.nudRow.TabIndex = 9;
-            this.nudRow.TabStop = false;
-            this.nudRow.Text = "codeeloNumericUpDown1";
-            this.nudRow.Value = 2;
-            this.nudRow.Visible = false;
+            this.nudRows.AccessibleRole = null;
+            this.nudRows.BackColor = System.Drawing.Color.Transparent;
+            this.nudRows.BackgroundImage = false;
+            this.nudRows.BackgroundImageLayout = false;
+            this.nudRows.CausesValidation = false;
+            this.nudRows.FillColor = System.Drawing.Color.MediumSlateBlue;
+            this.nudRows.FillColorSecond = System.Drawing.Color.Blue;
+            this.nudRows.Font = new System.Drawing.Font("IOS 15 R SemiBold", 11F, System.Drawing.FontStyle.Bold);
+            this.nudRows.GradientDirection = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
+            this.nudRows.Interval = 1;
+            this.nudRows.Location = new System.Drawing.Point(16, 302);
+            this.nudRows.MaxValue = 8;
+            this.nudRows.MinValue = 2;
+            this.nudRows.Name = "nudRows";
+            this.nudRows.Radius = 15;
+            this.nudRows.Size = new System.Drawing.Size(100, 32);
+            this.nudRows.TabIndex = 9;
+            this.nudRows.TabStop = false;
+            this.nudRows.Text = "codeeloNumericUpDown1";
+            this.nudRows.Value = 2;
+            this.nudRows.Visible = false;
             // 
             // label5
             // 
@@ -415,7 +415,7 @@
             // 
             // GameScreen
             // 
-            this.GameScreen.BackgroundImage = global::Puzzle_Game.Properties.Resources.oliver_guhr_Qs3ALnjkwF4_unsplash;
+            this.GameScreen.BackgroundImage = global::Puzzle_Game.Properties.Resources.Game_Screen_Background;
             this.GameScreen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.GameScreen.Controls.Add(this.pictureBox1);
             this.GameScreen.Controls.Add(this.tlp);
@@ -426,6 +426,14 @@
             this.GameScreen.TabIndex = 0;
             this.GameScreen.Text = "Game Screen";
             this.GameScreen.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(671, 93);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(400, 400);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // tlp
             // 
@@ -468,14 +476,6 @@
             this.guna2CustomGradientPanel2.ShadowDecoration.Parent = this.guna2CustomGradientPanel2;
             this.guna2CustomGradientPanel2.Size = new System.Drawing.Size(381, 32);
             this.guna2CustomGradientPanel2.TabIndex = 1;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(671, 93);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(400, 400);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
             // 
             // Form1
             // 
@@ -521,7 +521,7 @@
         private Guna.UI2.WinForms.Guna2ToggleSwitch tsHardMode;
         private Guna.UI2.WinForms.Guna2ToggleSwitch tsMediumMode;
         private CodeeloUI.Controls.CodeeloNumericUpDown nudColumns;
-        private CodeeloUI.Controls.CodeeloNumericUpDown nudRow;
+        private CodeeloUI.Controls.CodeeloNumericUpDown nudRows;
         private Guna.UI2.WinForms.Guna2GradientButton btnGetUserImage;
         private System.Windows.Forms.Label lblDesignerName;
         private System.Windows.Forms.Label lblTitle;

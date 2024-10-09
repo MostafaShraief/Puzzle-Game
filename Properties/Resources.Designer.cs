@@ -63,9 +63,9 @@ namespace Puzzle_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap daniele_franchi_dt0yhDQmJ4k_unsplash {
+        internal static System.Drawing.Bitmap Cat {
             get {
-                object obj = ResourceManager.GetObject("daniele-franchi-dt0yhDQmJ4k-unsplash", resourceCulture);
+                object obj = ResourceManager.GetObject("Cat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Puzzle_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap oliver_guhr_Qs3ALnjkwF4_unsplash {
+        internal static System.Drawing.Bitmap Game_Screen_Background {
             get {
-                object obj = ResourceManager.GetObject("oliver-guhr-Qs3ALnjkwF4-unsplash", resourceCulture);
+                object obj = ResourceManager.GetObject("Game Screen Background", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace Puzzle_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap volodymyr_hryshchenko_inI8GnmS190_unsplash {
+        internal static System.Drawing.Bitmap Main_Screen_Background {
             get {
-                object obj = ResourceManager.GetObject("volodymyr-hryshchenko-inI8GnmS190-unsplash", resourceCulture);
+                object obj = ResourceManager.GetObject("Main Screen Background", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
