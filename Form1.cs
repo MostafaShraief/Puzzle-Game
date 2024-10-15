@@ -287,13 +287,26 @@ namespace Puzzle_Game
 
         void ShuffleImageButtonsList()
         {
+            // Define Random Variable.
+            Random rnd = new Random();
 
-            //for (int i = 0; i < listImageButtons.Count; ++i)
-            //{
-            //    Button button = listImageButtons[0][0];
-            //    listImageButtons[0][0] = listImageButtons[0][1];
-            //    listImageButtons[0][1] = button;
-            //}
+            // Shuffle Array Randomly By Selecting 2 Elements And Swapping Them For 'n' Elements Once.
+            for (int i = 0; i < listImageButtons.Count; ++i)
+            {
+                // Row1 & Col1 Are Repersenting One Random Element In The List.
+                int Row1 = rnd.Next(0, GameSettings.Rows),
+                    Col1 = rnd.Next(0, GameSettings.Columns);
+
+                // Row2 & Col2 Are The Same For Another Random One.
+                int Row2 = rnd.Next(0, GameSettings.Rows),
+                    Col2 = rnd.Next(0, GameSettings.Columns);
+
+                // Swap Both Buttons.
+                Button button = listImageButtons[Row1][Col1];
+                listImageButtons[Row1][Col1] = listImageButtons[Row2][Col2];
+                listImageButtons[Row2][Col2] = button;
+
+            }
 
         }
 
@@ -313,6 +326,7 @@ namespace Puzzle_Game
             lblGSColumns.Text = GameSettings.Columns.ToString();
             lblGSResult.ForeColor = Color.MediumSlateBlue;
             lblGSResult.Text = "Pending";
+            btnGSPlayAgain.Visible = false;
 
         }
 
@@ -349,16 +363,35 @@ namespace Puzzle_Game
 
         }
 
+        void WonGame()
+        {
+            // Game Win Setting.
+            tlp.Enabled = false;
+            MessageBox.Show("You Won!", "GG",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            lblGSResult.Text = "Won";
+            lblGSResult.ForeColor = Color.FromArgb(253, 202, 0);
+            btnGSPlayAgain.Visible = true;
+        }
+
+        void LostGame()
+        {
+            // Game Lose Setting.
+            tlp.Enabled = false;
+            MessageBox.Show("You Lost ;(", "Bad News",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            lblGSResult.Text = "Lost";
+            lblGSResult.ForeColor = Color.OrangeRed;
+            btnGSPlayAgain.Visible = true;
+        }
+
         void CheckWinning()
         {
-
+            // Check If Player Won The Game.
             if (IsPlayerWon())
-            {
-                tlp.Enabled = false;
-                MessageBox.Show("yeee");
-            }
+                WonGame();
             else
-                MessageBox.Show("Nooo");
+                LostGame();
 
         }
 
@@ -401,6 +434,11 @@ namespace Puzzle_Game
                 ofdlg.InitialDirectory = ofdlg.InitialDirectory;
             }
 
+        }
+
+        private void btnGSPlayAgain_Click(object sender, EventArgs e)
+        {
+            tc.SelectTab(0);
         }
 
     }

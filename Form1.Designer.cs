@@ -70,6 +70,7 @@
             this.guna2DragControl1 = new Guna.UI2.WinForms.Guna2DragControl(this.components);
             this.guna2CustomGradientPanel2 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             this.ofdlg = new System.Windows.Forms.OpenFileDialog();
+            this.btnGSPlayAgain = new Guna.UI2.WinForms.Guna2GradientButton();
             this.tc.SuspendLayout();
             this.MainMenu.SuspendLayout();
             this.cyberGroupBox1.SuspendLayout();
@@ -444,6 +445,7 @@
             // 
             this.GameScreen.BackgroundImage = global::Puzzle_Game.Properties.Resources.Game_Screen_Background;
             this.GameScreen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.GameScreen.Controls.Add(this.btnGSPlayAgain);
             this.GameScreen.Controls.Add(this.cyberGroupBox2);
             this.GameScreen.Controls.Add(this.pbOriginalImage);
             this.GameScreen.Controls.Add(this.tlp);
@@ -674,6 +676,30 @@
             // 
             this.ofdlg.FileName = " ";
             // 
+            // btnGSPlayAgain
+            // 
+            this.btnGSPlayAgain.Animated = true;
+            this.btnGSPlayAgain.AutoRoundedCorners = true;
+            this.btnGSPlayAgain.BorderRadius = 10;
+            this.btnGSPlayAgain.BorderThickness = 2;
+            this.btnGSPlayAgain.CheckedState.Parent = this.btnGSPlayAgain;
+            this.btnGSPlayAgain.CustomImages.Parent = this.btnGSPlayAgain;
+            this.btnGSPlayAgain.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnGSPlayAgain.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(202)))), ((int)(((byte)(0)))));
+            this.btnGSPlayAgain.Font = new System.Drawing.Font("Nirmala UI", 19.8F, System.Drawing.FontStyle.Bold);
+            this.btnGSPlayAgain.ForeColor = System.Drawing.Color.Black;
+            this.btnGSPlayAgain.HoverState.BorderColor = System.Drawing.Color.Transparent;
+            this.btnGSPlayAgain.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(202)))), ((int)(((byte)(0)))));
+            this.btnGSPlayAgain.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnGSPlayAgain.HoverState.Parent = this.btnGSPlayAgain;
+            this.btnGSPlayAgain.Location = new System.Drawing.Point(40, 510);
+            this.btnGSPlayAgain.Name = "btnGSPlayAgain";
+            this.btnGSPlayAgain.ShadowDecoration.Parent = this.btnGSPlayAgain;
+            this.btnGSPlayAgain.Size = new System.Drawing.Size(191, 45);
+            this.btnGSPlayAgain.TabIndex = 5;
+            this.btnGSPlayAgain.Text = "Play Again";
+            this.btnGSPlayAgain.Click += new System.EventHandler(this.btnGSPlayAgain_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -741,6 +767,7 @@
         private System.Windows.Forms.Label lblGSMode;
         private System.Windows.Forms.Label lblGSRows;
         private System.Windows.Forms.Label lblGSColumns;
+        private Guna.UI2.WinForms.Guna2GradientButton btnGSPlayAgain;
     }
 }
 
