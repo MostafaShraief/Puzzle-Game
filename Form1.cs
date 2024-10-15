@@ -18,6 +18,7 @@ using GunaPictureBox = Guna.UI2.WinForms.Suite.PictureBox;
 using Button = System.Windows.Forms.Button;
 using WPictureBox = System.Windows.Forms.PictureBox;
 using System.IO;
+using System.Security.Cryptography;
 
 
 namespace Puzzle_Game
@@ -41,9 +42,11 @@ namespace Puzzle_Game
     public partial class Form1 : Form
     {
 
-        List<List<Button>> ImageButtonsList;
+        List<List<Button>> listImageButtons;
 
         stGameSettings GameSettings;
+
+        Bitmap SelectedFileImage;
 
         public Form1()
         {
@@ -70,8 +73,11 @@ namespace Puzzle_Game
             }
             else if (tsCustomMode.Checked)
             {
+                if (SelectedFileImage == null)
+                    SelectedFileImage = Resources.Cat;
+
                 GameSettings = new stGameSettings(nudRows.Value, nudColumns.Value,
-                    Resources.Cat);
+                    SelectedFileImage);
             }
 
         }
@@ -108,7 +114,7 @@ namespace Puzzle_Game
                 tsHardMode.Checked == tsCustomMode.Checked);
         }
 
-       bool OpenGameScreen()
+        bool OpenGameScreen()
         {
 
             if (CheckMode())
@@ -125,7 +131,12 @@ namespace Puzzle_Game
 
         }
 
-        Button CreateImageButton(Bitmap Image)
+        void Mes(object sender, EventArgs e)
+        {
+            MessageBox.Show("hi");
+        }
+
+        Button CreateImageButton(Bitmap Image, int Row, int Column)
         {
 
             Button button = new Button();
@@ -134,22 +145,43 @@ namespace Puzzle_Game
 
             button.BackgroundImageLayout = ImageLayout.Stretch;
 
-            button.Text = "";
+            button.Text = null;
+
+            button.Tag = string.Format($"{Row}_{Column}");
 
             button.FlatStyle = FlatStyle.Flat;
 
             button.FlatAppearance.BorderColor = Color.Black;
 
-            button.FlatAppearance.BorderSize = 5;
+            button.FlatAppearance.BorderSize = 2;
+
+            button.Dock = DockStyle.Fill;
 
             return button;
 
         }
 
-        void CreatePictureBoxesList()
+        Bitmap CropImage(int Row, int Column, int PartWidth, int PartHeight)
         {
 
-            ImageButtonsList = new List<List<Button>>();
+            // Define Rectangle For The Current Part Of Image.
+            Rectangle rectangle = new Rectangle(
+                GameSettings.Image.Width / GameSettings.Columns * Column,
+                GameSettings.Image.Height / GameSettings.Rows * Row,
+                PartWidth, PartHeight);
+
+            // Crop the image part.
+            Bitmap PartImage = GameSettings.Image.Clone(rectangle,
+                GameSettings.Image.PixelFormat);
+
+            return PartImage;
+
+        }
+
+        void CreateImageButtonsList()
+        {
+
+            listImageButtons = new List<List<Button>>();
 
             int PartWidth = GameSettings.Image.Width / GameSettings.Columns;
             int PartHeight = GameSettings.Image.Height / GameSettings.Rows;
@@ -170,18 +202,13 @@ namespace Puzzle_Game
                 for (int Column = 0; Column < GameSettings.Columns; Column++)
                 {
 
-                    // Define Rectangle For The Current Part Of Image
-                    Rectangle rectangle = new Rectangle(
-                        GameSettings.Image.Width / GameSettings.Columns * Column,
-                        GameSettings.Image.Height / GameSettings.Rows * Row,
-                        PartWidth, PartHeight);
+                    // Get Image Part Using 'CropImage' Function.
+                    Bitmap PartImage = CropImage(Row, Column, PartWidth, PartHeight);
 
-                    // Crop the image part
-                    Bitmap PartImage = GameSettings.Image.Clone(rectangle,
-                        GameSettings.Image.PixelFormat);
+                    // Create Button And Insert Image Part To It Using 'CreateImageButton' Function.
+                    Button ImageButton = CreateImageButton(PartImage, Row, Column);
 
-                    Button ImageButton = CreateImageButton(PartImage);
-
+                    // Add Column To The Current 'RowList' List.
                     RowList.Add(ImageButton);
 
                     //// Create Path For The Current Image Part
@@ -194,19 +221,144 @@ namespace Puzzle_Game
 
                 }
 
-                ImageButtonsList.Add(RowList);
+                // Add Current 'RowList' List To 'listImageButtons' List.
+                listImageButtons.Add(RowList);
 
             }
 
         }
 
-        void CreateGameMode()
+        void EditPictureBoxAndtlpSize()
         {
-            CreatePictureBoxesList();
+
+            double width = (double)GameSettings.Image.Height / GameSettings.Image.Width;
+
+            width = (width > 1) ? width : 1;
+
+            width = 400 / width;
+
+            double height = (double)GameSettings.Image.Width / GameSettings.Image.Height;
+
+            height = (height > 1) ? height : 1;
+
+            height = 400 / height;
+
+            tlp.Size = new Size((int)width, (int)height);
+
+            pbOriginalImage.Size = tlp.Size;
+
         }
 
-        private void guna2GradientCircleButton1_Click(object sender, EventArgs e)
+        void EditDimensionsIntlp()
         {
+
+            tlp.RowStyles.Clear();
+            tlp.ColumnStyles.Clear();
+            tlp.Controls.Clear();
+            tlp.RowCount = GameSettings.Rows;
+            tlp.ColumnCount = GameSettings.Columns;
+
+            for (int i = 0; i < GameSettings.Columns; i++)
+            {
+                tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / GameSettings.Columns));
+            }
+
+            for (int i = 0; i < GameSettings.Rows; i++)
+            {
+                tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / GameSettings.Rows));
+            }
+
+        }
+
+        void AddlistImageButtonsTotlp()
+        {
+
+            for (int Row = 0; Row < GameSettings.Rows; ++Row)
+            {
+
+                for (int Column = 0; Column < GameSettings.Columns; ++Column)
+                {
+                    tlp.Controls.Add(listImageButtons[Row][Column], Column, Row);
+                }
+
+            }
+
+        }
+
+        void ShuffleImageButtonsList()
+        {
+
+            //for (int i = 0; i < listImageButtons.Count; ++i)
+            //{
+            //    Button button = listImageButtons[0][0];
+            //    listImageButtons[0][0] = listImageButtons[0][1];
+            //    listImageButtons[0][1] = button;
+            //}
+
+        }
+
+        void GameScreenStatus()
+        {
+            
+            if (tsEasyMode.Checked)
+                lblGSMode.Text = tsEasyMode.Tag.ToString();
+            else if (tsMediumMode.Checked)
+                lblGSMode.Text = tsMediumMode.Tag.ToString();
+            else if (tsHardMode.Checked)
+                lblGSMode.Text = tsHardMode.Tag.ToString();
+            else
+                lblGSMode.Text = tsCustomMode.Tag.ToString();
+
+            lblGSRows.Text = GameSettings.Rows.ToString();
+            lblGSColumns.Text = GameSettings.Columns.ToString();
+            lblGSResult.ForeColor = Color.MediumSlateBlue;
+            lblGSResult.Text = "Pending";
+
+        }
+
+        void CreateGameMode()
+        {
+            GameScreenStatus();
+            CreateImageButtonsList();
+            ShuffleImageButtonsList();
+            EditDimensionsIntlp();
+            EditPictureBoxAndtlpSize();
+            AddlistImageButtonsTotlp();
+            pbOriginalImage.Image = GameSettings.Image;
+            CheckWinning();
+        }
+
+        bool IsPlayerWon()
+        {
+
+            // Rows Loop.
+            for (int Row = 0; Row < GameSettings.Rows; Row++)
+            {
+                // Columns Loop
+                for (int Column = 0; Column < GameSettings.Columns; Column++)
+                {
+                    // Check If Current Button Is In The Right Position.
+                    if (listImageButtons[Row][Column].Tag.ToString() != string.Format($"{Row}_{Column}"))
+                        return false; // Not Won Yet.
+
+                }
+
+            }
+            
+            return true; // Won.
+
+        }
+
+        void CheckWinning()
+        {
+
+            if (IsPlayerWon())
+            {
+                tlp.Enabled = false;
+                MessageBox.Show("yeee");
+            }
+            else
+                MessageBox.Show("Nooo");
 
         }
 
@@ -230,6 +382,23 @@ namespace Puzzle_Game
             {
                 SetGameSettings();
                 CreateGameMode();
+            }
+
+        }
+
+        private void btnGetUserImage_Click(object sender, EventArgs e)
+        {
+
+            ofdlg.InitialDirectory = @"C:\";
+            // Need To Fix, It`s Not Support png Extension.
+            ofdlg.Filter = "(*.jpg - *.png)|*.jpg";
+            ofdlg.Title = "Select Image";
+            ofdlg.DefaultExt = "jpg";
+
+            if (ofdlg.ShowDialog() == DialogResult.OK)
+            {
+                SelectedFileImage = Bitmap.FromFile(ofdlg.FileName) as Bitmap;
+                ofdlg.InitialDirectory = ofdlg.InitialDirectory;
             }
 
         }
