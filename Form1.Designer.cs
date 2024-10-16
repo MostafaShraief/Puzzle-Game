@@ -52,8 +52,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.GameScreen = new System.Windows.Forms.TabPage();
-            this.guna2GradientButton1 = new Guna.UI2.WinForms.Guna2GradientButton();
-            this.btnGSShuffle = new Guna.UI2.WinForms.Guna2GradientButton();
             this.btnGSPlayAgain = new Guna.UI2.WinForms.Guna2GradientButton();
             this.cyberGroupBox2 = new ReaLTaiizor.Controls.CyberGroupBox();
             this.lblGSResult = new System.Windows.Forms.Label();
@@ -74,6 +72,8 @@
             this.guna2CustomGradientPanel2 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             this.ofdlg = new System.Windows.Forms.OpenFileDialog();
             this.tmr = new System.Windows.Forms.Timer(this.components);
+            this.btnGSShuffle = new Guna.UI2.WinForms.Guna2GradientButton();
+            this.guna2GradientButton1 = new Guna.UI2.WinForms.Guna2GradientButton();
             this.guna2CustomGradientPanel3 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             this.guna2CustomGradientPanel4 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             this.guna2CustomGradientPanel5 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
@@ -114,7 +114,7 @@
             this.MainMenu.Location = new System.Drawing.Point(4, 25);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.MainMenu.Size = new System.Drawing.Size(1120, 575);
+            this.MainMenu.Size = new System.Drawing.Size(1121, 575);
             this.MainMenu.TabIndex = 1;
             this.MainMenu.Text = "Main Menu";
             // 
@@ -134,9 +134,9 @@
             this.lblTitle.Font = new System.Drawing.Font("Nirmala UI", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.Location = new System.Drawing.Point(817, 195);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(234, 45);
+            this.lblTitle.Size = new System.Drawing.Size(217, 45);
             this.lblTitle.TabIndex = 13;
-            this.lblTitle.Text = "Sliding Puzzle";
+            this.lblTitle.Text = "Puzzle Game";
             // 
             // btnStartGame
             // 
@@ -464,56 +464,6 @@
             this.GameScreen.Text = "Game Screen";
             this.GameScreen.UseVisualStyleBackColor = true;
             // 
-            // guna2GradientButton1
-            // 
-            this.guna2GradientButton1.Animated = true;
-            this.guna2GradientButton1.AutoRoundedCorners = true;
-            this.guna2GradientButton1.BorderRadius = 17;
-            this.guna2GradientButton1.BorderThickness = 2;
-            this.guna2GradientButton1.CheckedState.Parent = this.guna2GradientButton1;
-            this.guna2GradientButton1.CustomImages.Parent = this.guna2GradientButton1;
-            this.guna2GradientButton1.FillColor = System.Drawing.Color.Red;
-            this.guna2GradientButton1.FillColor2 = System.Drawing.Color.Maroon;
-            this.guna2GradientButton1.Font = new System.Drawing.Font("Nirmala UI", 19.8F, System.Drawing.FontStyle.Bold);
-            this.guna2GradientButton1.ForeColor = System.Drawing.Color.Black;
-            this.guna2GradientButton1.HoverState.BorderColor = System.Drawing.Color.Transparent;
-            this.guna2GradientButton1.HoverState.FillColor = System.Drawing.Color.Red;
-            this.guna2GradientButton1.HoverState.FillColor2 = System.Drawing.Color.Red;
-            this.guna2GradientButton1.HoverState.Parent = this.guna2GradientButton1;
-            this.guna2GradientButton1.Location = new System.Drawing.Point(6, 267);
-            this.guna2GradientButton1.Name = "guna2GradientButton1";
-            this.guna2GradientButton1.ShadowDecoration.Parent = this.guna2GradientButton1;
-            this.guna2GradientButton1.Size = new System.Drawing.Size(37, 53);
-            this.guna2GradientButton1.TabIndex = 7;
-            this.guna2GradientButton1.TabStop = false;
-            this.guna2GradientButton1.Text = "<";
-            this.guna2GradientButton1.Click += new System.EventHandler(this.guna2GradientButton1_Click);
-            // 
-            // btnGSShuffle
-            // 
-            this.btnGSShuffle.Animated = true;
-            this.btnGSShuffle.AutoRoundedCorners = true;
-            this.btnGSShuffle.BorderRadius = 21;
-            this.btnGSShuffle.BorderThickness = 2;
-            this.btnGSShuffle.CheckedState.Parent = this.btnGSShuffle;
-            this.btnGSShuffle.CustomImages.Parent = this.btnGSShuffle;
-            this.btnGSShuffle.FillColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnGSShuffle.FillColor2 = System.Drawing.Color.Blue;
-            this.btnGSShuffle.Font = new System.Drawing.Font("Nirmala UI", 19.8F, System.Drawing.FontStyle.Bold);
-            this.btnGSShuffle.ForeColor = System.Drawing.Color.Black;
-            this.btnGSShuffle.HoverState.BorderColor = System.Drawing.Color.Transparent;
-            this.btnGSShuffle.HoverState.FillColor = System.Drawing.Color.Blue;
-            this.btnGSShuffle.HoverState.FillColor2 = System.Drawing.Color.MediumSlateBlue;
-            this.btnGSShuffle.HoverState.Parent = this.btnGSShuffle;
-            this.btnGSShuffle.Location = new System.Drawing.Point(359, 510);
-            this.btnGSShuffle.Name = "btnGSShuffle";
-            this.btnGSShuffle.ShadowDecoration.Parent = this.btnGSShuffle;
-            this.btnGSShuffle.Size = new System.Drawing.Size(191, 45);
-            this.btnGSShuffle.TabIndex = 6;
-            this.btnGSShuffle.TabStop = false;
-            this.btnGSShuffle.Text = "Shuffle";
-            this.btnGSShuffle.Click += new System.EventHandler(this.btnGSShuffle_Click);
-            // 
             // btnGSPlayAgain
             // 
             this.btnGSPlayAgain.Animated = true;
@@ -761,6 +711,56 @@
             // tmr
             // 
             this.tmr.Tick += new System.EventHandler(this.tmr_Tick);
+            // 
+            // btnGSShuffle
+            // 
+            this.btnGSShuffle.Animated = true;
+            this.btnGSShuffle.AutoRoundedCorners = true;
+            this.btnGSShuffle.BorderRadius = 21;
+            this.btnGSShuffle.BorderThickness = 2;
+            this.btnGSShuffle.CheckedState.Parent = this.btnGSShuffle;
+            this.btnGSShuffle.CustomImages.Parent = this.btnGSShuffle;
+            this.btnGSShuffle.FillColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnGSShuffle.FillColor2 = System.Drawing.Color.Blue;
+            this.btnGSShuffle.Font = new System.Drawing.Font("Nirmala UI", 19.8F, System.Drawing.FontStyle.Bold);
+            this.btnGSShuffle.ForeColor = System.Drawing.Color.Black;
+            this.btnGSShuffle.HoverState.BorderColor = System.Drawing.Color.Transparent;
+            this.btnGSShuffle.HoverState.FillColor = System.Drawing.Color.Blue;
+            this.btnGSShuffle.HoverState.FillColor2 = System.Drawing.Color.MediumSlateBlue;
+            this.btnGSShuffle.HoverState.Parent = this.btnGSShuffle;
+            this.btnGSShuffle.Location = new System.Drawing.Point(359, 510);
+            this.btnGSShuffle.Name = "btnGSShuffle";
+            this.btnGSShuffle.ShadowDecoration.Parent = this.btnGSShuffle;
+            this.btnGSShuffle.Size = new System.Drawing.Size(191, 45);
+            this.btnGSShuffle.TabIndex = 6;
+            this.btnGSShuffle.TabStop = false;
+            this.btnGSShuffle.Text = "Shuffle";
+            this.btnGSShuffle.Click += new System.EventHandler(this.btnGSShuffle_Click);
+            // 
+            // guna2GradientButton1
+            // 
+            this.guna2GradientButton1.Animated = true;
+            this.guna2GradientButton1.AutoRoundedCorners = true;
+            this.guna2GradientButton1.BorderRadius = 17;
+            this.guna2GradientButton1.BorderThickness = 2;
+            this.guna2GradientButton1.CheckedState.Parent = this.guna2GradientButton1;
+            this.guna2GradientButton1.CustomImages.Parent = this.guna2GradientButton1;
+            this.guna2GradientButton1.FillColor = System.Drawing.Color.Red;
+            this.guna2GradientButton1.FillColor2 = System.Drawing.Color.Maroon;
+            this.guna2GradientButton1.Font = new System.Drawing.Font("Nirmala UI", 19.8F, System.Drawing.FontStyle.Bold);
+            this.guna2GradientButton1.ForeColor = System.Drawing.Color.Black;
+            this.guna2GradientButton1.HoverState.BorderColor = System.Drawing.Color.Transparent;
+            this.guna2GradientButton1.HoverState.FillColor = System.Drawing.Color.Red;
+            this.guna2GradientButton1.HoverState.FillColor2 = System.Drawing.Color.Red;
+            this.guna2GradientButton1.HoverState.Parent = this.guna2GradientButton1;
+            this.guna2GradientButton1.Location = new System.Drawing.Point(6, 267);
+            this.guna2GradientButton1.Name = "guna2GradientButton1";
+            this.guna2GradientButton1.ShadowDecoration.Parent = this.guna2GradientButton1;
+            this.guna2GradientButton1.Size = new System.Drawing.Size(37, 53);
+            this.guna2GradientButton1.TabIndex = 7;
+            this.guna2GradientButton1.TabStop = false;
+            this.guna2GradientButton1.Text = "<";
+            this.guna2GradientButton1.Click += new System.EventHandler(this.guna2GradientButton1_Click);
             // 
             // guna2CustomGradientPanel3
             // 
