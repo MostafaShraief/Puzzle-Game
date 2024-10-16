@@ -455,6 +455,7 @@ namespace Puzzle_Game
             AddlistImageButtonsTotlp();
             ShuffleImageButtonsList();
             SelectAndSetBlankButton();
+            btnGSShuffle.Visible = true;
             pbOriginalImage.Image = GameSettings.Image;
             CheckWinning();
             RunTimer();
@@ -462,23 +463,6 @@ namespace Puzzle_Game
 
         bool IsPlayerWon()
         {
-
-            //// Rows Loop.
-            //for (int Row = 0; Row < GameSettings.Rows; Row++)
-            //{
-            //    // Columns Loop
-            //    for (int Column = 0; Column < GameSettings.Columns; Column++)
-            //    {
-            //        // Check If It`s a Blank Button
-            //        if (listImageButtons[Row][Column].BackgroundImage == null)
-            //            continue;
-            //        // Check If Current Button Is In The Right Position.
-            //        if (!listImageButtons[Row][Column].Equals((Row, Column)))
-            //            return false; // Not Won Yet.
-
-            //    }
-
-            //}
 
             // Loop Through Each Control In 'tlp' And Check Its Position.
             foreach (Button item in tlp.Controls)
@@ -508,11 +492,13 @@ namespace Puzzle_Game
             lblGSResult.Text = "Won";
             lblGSResult.ForeColor = Color.FromArgb(253, 202, 0);
             btnGSPlayAgain.Visible = true;
+            btnGSShuffle.Visible = false;
             StopTimer();
             MessageBox.Show("You Won!", "GG",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // 'LostGame' Function For Upcoming Update.
         void LostGame()
         {
             // Game Lose Setting.
@@ -530,8 +516,6 @@ namespace Puzzle_Game
             // Check If Player Won The Game.
             if (IsPlayerWon())
                 WonGame();
-            //else
-            //    LostGame();
 
         }
 
@@ -564,7 +548,7 @@ namespace Puzzle_Game
 
             ofdlg.InitialDirectory = @"C:\";
             // Need To Fix, It`s Not Support png Extension.
-            ofdlg.Filter = "(*.jpg - *.png)|*.jpg";
+            ofdlg.Filter = "Image Files (*.jpg;*.png)|*.jpg;*.png";
             ofdlg.Title = "Select Image";
             ofdlg.DefaultExt = "jpg";
 
@@ -628,5 +612,21 @@ namespace Puzzle_Game
             tc.SelectTab(0);
         }
 
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void guna2Button1_Click_1(object sender, EventArgs e)
+        {
+            string teleramurl = "https://t.me/Mostafa_Shraief";
+            System.Diagnostics.Process.Start(teleramurl);
+        }
+
+        private void btnGitHub_Click(object sender, EventArgs e)
+        {
+            string githuburl = "https://github.com/MostafaShraief";
+            System.Diagnostics.Process.Start(githuburl);
+        }
     }
 }

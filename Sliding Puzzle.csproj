@@ -110,5 +110,11 @@
   <ItemGroup>
     <None Include="Resources\lina-angelov-Ah_QC2v2alE-unsplash.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\telegram.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\github.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
