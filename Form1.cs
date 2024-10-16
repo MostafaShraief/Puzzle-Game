@@ -293,10 +293,11 @@ namespace Puzzle_Game
 
         void EditDimensionsIntlp()
         {
-
+            
             tlp.RowStyles.Clear();
             tlp.ColumnStyles.Clear();
             tlp.Controls.Clear();
+            tlp.Enabled = true;
             tlp.RowCount = GameSettings.Rows;
             tlp.ColumnCount = GameSettings.Columns;
 
@@ -444,6 +445,7 @@ namespace Puzzle_Game
             tmr.Interval = 1;
             tmr.Enabled = true;
             TimeTicksCounter = 0;
+            tmr_Tick(tmr, EventArgs.Empty);
         }
 
         void CreateGameMode()
@@ -457,8 +459,8 @@ namespace Puzzle_Game
             SelectAndSetBlankButton();
             btnGSShuffle.Visible = true;
             pbOriginalImage.Image = GameSettings.Image;
-            CheckWinning();
             RunTimer();
+            CheckWinning();
         }
 
         bool IsPlayerWon()
