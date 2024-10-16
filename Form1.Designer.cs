@@ -52,6 +52,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.GameScreen = new System.Windows.Forms.TabPage();
+            this.btnGSPlayAgain = new Guna.UI2.WinForms.Guna2GradientButton();
             this.cyberGroupBox2 = new ReaLTaiizor.Controls.CyberGroupBox();
             this.lblGSResult = new System.Windows.Forms.Label();
             this.lblGSTime = new System.Windows.Forms.Label();
@@ -70,7 +71,12 @@
             this.guna2DragControl1 = new Guna.UI2.WinForms.Guna2DragControl(this.components);
             this.guna2CustomGradientPanel2 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             this.ofdlg = new System.Windows.Forms.OpenFileDialog();
-            this.btnGSPlayAgain = new Guna.UI2.WinForms.Guna2GradientButton();
+            this.tmr = new System.Windows.Forms.Timer(this.components);
+            this.btnGSShuffle = new Guna.UI2.WinForms.Guna2GradientButton();
+            this.guna2GradientButton1 = new Guna.UI2.WinForms.Guna2GradientButton();
+            this.guna2CustomGradientPanel3 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
+            this.guna2CustomGradientPanel4 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
+            this.guna2CustomGradientPanel5 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             this.tc.SuspendLayout();
             this.MainMenu.SuspendLayout();
             this.cyberGroupBox1.SuspendLayout();
@@ -85,7 +91,6 @@
             // 
             // tc
             // 
-            this.tc.Alignment = System.Windows.Forms.TabAlignment.Bottom;
             this.tc.Controls.Add(this.MainMenu);
             this.tc.Controls.Add(this.GameScreen);
             this.tc.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -106,10 +111,10 @@
             this.MainMenu.Controls.Add(this.btnStartGame);
             this.MainMenu.Controls.Add(this.cyberGroupBox1);
             this.MainMenu.Controls.Add(this.panel1);
-            this.MainMenu.Location = new System.Drawing.Point(4, 4);
+            this.MainMenu.Location = new System.Drawing.Point(4, 25);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.MainMenu.Size = new System.Drawing.Size(1120, 575);
+            this.MainMenu.Size = new System.Drawing.Size(1121, 575);
             this.MainMenu.TabIndex = 1;
             this.MainMenu.Text = "Main Menu";
             // 
@@ -445,17 +450,43 @@
             // 
             this.GameScreen.BackgroundImage = global::Puzzle_Game.Properties.Resources.Game_Screen_Background;
             this.GameScreen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.GameScreen.Controls.Add(this.guna2GradientButton1);
+            this.GameScreen.Controls.Add(this.btnGSShuffle);
             this.GameScreen.Controls.Add(this.btnGSPlayAgain);
             this.GameScreen.Controls.Add(this.cyberGroupBox2);
             this.GameScreen.Controls.Add(this.pbOriginalImage);
             this.GameScreen.Controls.Add(this.tlp);
-            this.GameScreen.Location = new System.Drawing.Point(4, 4);
+            this.GameScreen.Location = new System.Drawing.Point(4, 25);
             this.GameScreen.Name = "GameScreen";
             this.GameScreen.Padding = new System.Windows.Forms.Padding(3);
             this.GameScreen.Size = new System.Drawing.Size(1120, 575);
             this.GameScreen.TabIndex = 0;
             this.GameScreen.Text = "Game Screen";
             this.GameScreen.UseVisualStyleBackColor = true;
+            // 
+            // btnGSPlayAgain
+            // 
+            this.btnGSPlayAgain.Animated = true;
+            this.btnGSPlayAgain.AutoRoundedCorners = true;
+            this.btnGSPlayAgain.BorderRadius = 21;
+            this.btnGSPlayAgain.BorderThickness = 2;
+            this.btnGSPlayAgain.CheckedState.Parent = this.btnGSPlayAgain;
+            this.btnGSPlayAgain.CustomImages.Parent = this.btnGSPlayAgain;
+            this.btnGSPlayAgain.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnGSPlayAgain.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(202)))), ((int)(((byte)(0)))));
+            this.btnGSPlayAgain.Font = new System.Drawing.Font("Nirmala UI", 19.8F, System.Drawing.FontStyle.Bold);
+            this.btnGSPlayAgain.ForeColor = System.Drawing.Color.Black;
+            this.btnGSPlayAgain.HoverState.BorderColor = System.Drawing.Color.Transparent;
+            this.btnGSPlayAgain.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(202)))), ((int)(((byte)(0)))));
+            this.btnGSPlayAgain.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnGSPlayAgain.HoverState.Parent = this.btnGSPlayAgain;
+            this.btnGSPlayAgain.Location = new System.Drawing.Point(40, 510);
+            this.btnGSPlayAgain.Name = "btnGSPlayAgain";
+            this.btnGSPlayAgain.ShadowDecoration.Parent = this.btnGSPlayAgain;
+            this.btnGSPlayAgain.Size = new System.Drawing.Size(191, 45);
+            this.btnGSPlayAgain.TabIndex = 5;
+            this.btnGSPlayAgain.Text = "Play Again";
+            this.btnGSPlayAgain.Click += new System.EventHandler(this.btnGSPlayAgain_Click);
             // 
             // cyberGroupBox2
             // 
@@ -496,20 +527,21 @@
             this.cyberGroupBox2.Size = new System.Drawing.Size(191, 400);
             this.cyberGroupBox2.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             this.cyberGroupBox2.TabIndex = 4;
+            this.cyberGroupBox2.TabStop = false;
             this.cyberGroupBox2.Tag = "Cyber";
             this.cyberGroupBox2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             this.cyberGroupBox2.Timer_RGB = 300;
             // 
             // lblGSResult
             // 
-            this.lblGSResult.AutoSize = true;
             this.lblGSResult.Font = new System.Drawing.Font("IOS 15 R SemiBold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGSResult.ForeColor = System.Drawing.Color.MediumSlateBlue;
-            this.lblGSResult.Location = new System.Drawing.Point(43, 341);
+            this.lblGSResult.Location = new System.Drawing.Point(25, 341);
             this.lblGSResult.Name = "lblGSResult";
-            this.lblGSResult.Size = new System.Drawing.Size(96, 29);
+            this.lblGSResult.Size = new System.Drawing.Size(132, 29);
             this.lblGSResult.TabIndex = 15;
             this.lblGSResult.Text = "Pending";
+            this.lblGSResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblGSTime
             // 
@@ -676,35 +708,107 @@
             // 
             this.ofdlg.FileName = " ";
             // 
-            // btnGSPlayAgain
+            // tmr
             // 
-            this.btnGSPlayAgain.Animated = true;
-            this.btnGSPlayAgain.AutoRoundedCorners = true;
-            this.btnGSPlayAgain.BorderRadius = 10;
-            this.btnGSPlayAgain.BorderThickness = 2;
-            this.btnGSPlayAgain.CheckedState.Parent = this.btnGSPlayAgain;
-            this.btnGSPlayAgain.CustomImages.Parent = this.btnGSPlayAgain;
-            this.btnGSPlayAgain.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnGSPlayAgain.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(202)))), ((int)(((byte)(0)))));
-            this.btnGSPlayAgain.Font = new System.Drawing.Font("Nirmala UI", 19.8F, System.Drawing.FontStyle.Bold);
-            this.btnGSPlayAgain.ForeColor = System.Drawing.Color.Black;
-            this.btnGSPlayAgain.HoverState.BorderColor = System.Drawing.Color.Transparent;
-            this.btnGSPlayAgain.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(202)))), ((int)(((byte)(0)))));
-            this.btnGSPlayAgain.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnGSPlayAgain.HoverState.Parent = this.btnGSPlayAgain;
-            this.btnGSPlayAgain.Location = new System.Drawing.Point(40, 510);
-            this.btnGSPlayAgain.Name = "btnGSPlayAgain";
-            this.btnGSPlayAgain.ShadowDecoration.Parent = this.btnGSPlayAgain;
-            this.btnGSPlayAgain.Size = new System.Drawing.Size(191, 45);
-            this.btnGSPlayAgain.TabIndex = 5;
-            this.btnGSPlayAgain.Text = "Play Again";
-            this.btnGSPlayAgain.Click += new System.EventHandler(this.btnGSPlayAgain_Click);
+            this.tmr.Tick += new System.EventHandler(this.tmr_Tick);
+            // 
+            // btnGSShuffle
+            // 
+            this.btnGSShuffle.Animated = true;
+            this.btnGSShuffle.AutoRoundedCorners = true;
+            this.btnGSShuffle.BorderRadius = 21;
+            this.btnGSShuffle.BorderThickness = 2;
+            this.btnGSShuffle.CheckedState.Parent = this.btnGSShuffle;
+            this.btnGSShuffle.CustomImages.Parent = this.btnGSShuffle;
+            this.btnGSShuffle.FillColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnGSShuffle.FillColor2 = System.Drawing.Color.Blue;
+            this.btnGSShuffle.Font = new System.Drawing.Font("Nirmala UI", 19.8F, System.Drawing.FontStyle.Bold);
+            this.btnGSShuffle.ForeColor = System.Drawing.Color.Black;
+            this.btnGSShuffle.HoverState.BorderColor = System.Drawing.Color.Transparent;
+            this.btnGSShuffle.HoverState.FillColor = System.Drawing.Color.Blue;
+            this.btnGSShuffle.HoverState.FillColor2 = System.Drawing.Color.MediumSlateBlue;
+            this.btnGSShuffle.HoverState.Parent = this.btnGSShuffle;
+            this.btnGSShuffle.Location = new System.Drawing.Point(359, 510);
+            this.btnGSShuffle.Name = "btnGSShuffle";
+            this.btnGSShuffle.ShadowDecoration.Parent = this.btnGSShuffle;
+            this.btnGSShuffle.Size = new System.Drawing.Size(191, 45);
+            this.btnGSShuffle.TabIndex = 6;
+            this.btnGSShuffle.TabStop = false;
+            this.btnGSShuffle.Text = "Shuffle";
+            this.btnGSShuffle.Click += new System.EventHandler(this.btnGSShuffle_Click);
+            // 
+            // guna2GradientButton1
+            // 
+            this.guna2GradientButton1.Animated = true;
+            this.guna2GradientButton1.AutoRoundedCorners = true;
+            this.guna2GradientButton1.BorderRadius = 17;
+            this.guna2GradientButton1.BorderThickness = 2;
+            this.guna2GradientButton1.CheckedState.Parent = this.guna2GradientButton1;
+            this.guna2GradientButton1.CustomImages.Parent = this.guna2GradientButton1;
+            this.guna2GradientButton1.FillColor = System.Drawing.Color.Red;
+            this.guna2GradientButton1.FillColor2 = System.Drawing.Color.Maroon;
+            this.guna2GradientButton1.Font = new System.Drawing.Font("Nirmala UI", 19.8F, System.Drawing.FontStyle.Bold);
+            this.guna2GradientButton1.ForeColor = System.Drawing.Color.Black;
+            this.guna2GradientButton1.HoverState.BorderColor = System.Drawing.Color.Transparent;
+            this.guna2GradientButton1.HoverState.FillColor = System.Drawing.Color.Red;
+            this.guna2GradientButton1.HoverState.FillColor2 = System.Drawing.Color.Red;
+            this.guna2GradientButton1.HoverState.Parent = this.guna2GradientButton1;
+            this.guna2GradientButton1.Location = new System.Drawing.Point(6, 267);
+            this.guna2GradientButton1.Name = "guna2GradientButton1";
+            this.guna2GradientButton1.ShadowDecoration.Parent = this.guna2GradientButton1;
+            this.guna2GradientButton1.Size = new System.Drawing.Size(37, 53);
+            this.guna2GradientButton1.TabIndex = 7;
+            this.guna2GradientButton1.TabStop = false;
+            this.guna2GradientButton1.Text = "<";
+            this.guna2GradientButton1.Click += new System.EventHandler(this.guna2GradientButton1_Click);
+            // 
+            // guna2CustomGradientPanel3
+            // 
+            this.guna2CustomGradientPanel3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.guna2CustomGradientPanel3.FillColor = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel3.FillColor2 = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel3.FillColor3 = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel3.FillColor4 = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel3.Location = new System.Drawing.Point(1118, 32);
+            this.guna2CustomGradientPanel3.Name = "guna2CustomGradientPanel3";
+            this.guna2CustomGradientPanel3.ShadowDecoration.Parent = this.guna2CustomGradientPanel3;
+            this.guna2CustomGradientPanel3.Size = new System.Drawing.Size(10, 572);
+            this.guna2CustomGradientPanel3.TabIndex = 1;
+            // 
+            // guna2CustomGradientPanel4
+            // 
+            this.guna2CustomGradientPanel4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.guna2CustomGradientPanel4.FillColor = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel4.FillColor2 = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel4.FillColor3 = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel4.FillColor4 = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel4.Location = new System.Drawing.Point(0, 32);
+            this.guna2CustomGradientPanel4.Name = "guna2CustomGradientPanel4";
+            this.guna2CustomGradientPanel4.ShadowDecoration.Parent = this.guna2CustomGradientPanel4;
+            this.guna2CustomGradientPanel4.Size = new System.Drawing.Size(10, 562);
+            this.guna2CustomGradientPanel4.TabIndex = 2;
+            // 
+            // guna2CustomGradientPanel5
+            // 
+            this.guna2CustomGradientPanel5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.guna2CustomGradientPanel5.FillColor = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel5.FillColor2 = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel5.FillColor3 = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel5.FillColor4 = System.Drawing.Color.Black;
+            this.guna2CustomGradientPanel5.Location = new System.Drawing.Point(0, 594);
+            this.guna2CustomGradientPanel5.Name = "guna2CustomGradientPanel5";
+            this.guna2CustomGradientPanel5.ShadowDecoration.Parent = this.guna2CustomGradientPanel5;
+            this.guna2CustomGradientPanel5.Size = new System.Drawing.Size(1118, 10);
+            this.guna2CustomGradientPanel5.TabIndex = 2;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1128, 604);
+            this.Controls.Add(this.guna2CustomGradientPanel4);
+            this.Controls.Add(this.guna2CustomGradientPanel5);
+            this.Controls.Add(this.guna2CustomGradientPanel3);
             this.Controls.Add(this.guna2CustomGradientPanel2);
             this.Controls.Add(this.guna2CustomGradientPanel1);
             this.Controls.Add(this.tc);
@@ -768,6 +872,12 @@
         private System.Windows.Forms.Label lblGSRows;
         private System.Windows.Forms.Label lblGSColumns;
         private Guna.UI2.WinForms.Guna2GradientButton btnGSPlayAgain;
+        private System.Windows.Forms.Timer tmr;
+        private Guna.UI2.WinForms.Guna2GradientButton btnGSShuffle;
+        private Guna.UI2.WinForms.Guna2GradientButton guna2GradientButton1;
+        private Guna.UI2.WinForms.Guna2CustomGradientPanel guna2CustomGradientPanel4;
+        private Guna.UI2.WinForms.Guna2CustomGradientPanel guna2CustomGradientPanel5;
+        private Guna.UI2.WinForms.Guna2CustomGradientPanel guna2CustomGradientPanel3;
     }
 }
 

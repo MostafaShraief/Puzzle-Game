@@ -19,6 +19,8 @@ using Button = System.Windows.Forms.Button;
 using WPictureBox = System.Windows.Forms.PictureBox;
 using System.IO;
 using System.Security.Cryptography;
+using System.Resources;
+using MaterialSkin;
 
 
 namespace Puzzle_Game
@@ -42,11 +44,27 @@ namespace Puzzle_Game
     public partial class Form1 : Form
     {
 
+        public class ButtonPosition
+        {
+            public (int Row, int Col) OriginalPosition { get; set; }
+            public (int Row, int Col) CurrentPosition { get; set; }
+
+            public ButtonPosition(int originalRow, int originalCol, int currentRow, int currentCol)
+            {
+                OriginalPosition = (originalRow, originalCol);
+                CurrentPosition = (currentRow, currentCol);
+            }
+        }
+
         List<List<Button>> listImageButtons;
 
         stGameSettings GameSettings;
 
         Bitmap SelectedFileImage;
+
+        Button BlankButton;
+
+        public int TimeTicksCounter;
 
         public Form1()
         {
@@ -131,9 +149,27 @@ namespace Puzzle_Game
 
         }
 
-        void Mes(object sender, EventArgs e)
+        void SwitchSelectedButton(object sender, EventArgs e)
         {
-            MessageBox.Show("hi");
+
+            Button SelectedButton = sender as Button;
+
+            EnableOrDisableSorroundBlankButton(false); // Disable.
+
+            // Swap 'SelectedButton' And 'BlankButton'.
+            SwapButtons(SelectedButton, BlankButton);
+
+            // Refresh the UI to ensure the changes are shown
+            SelectedButton.Refresh();
+            BlankButton.Refresh();
+
+            // Update Blank Button.
+            BlankButton = SelectedButton;
+
+            EnableOrDisableSorroundBlankButton(true); // Enable.
+  
+            CheckWinning();
+
         }
 
         Button CreateImageButton(Bitmap Image, int Row, int Column)
@@ -145,9 +181,11 @@ namespace Puzzle_Game
 
             button.BackgroundImageLayout = ImageLayout.Stretch;
 
+            button.BackColor = Color.Black;
+
             button.Text = null;
 
-            button.Tag = string.Format($"{Row}_{Column}");
+            button.Tag = new ButtonPosition(Row, Column, Row, Column); // Org, Org, Cur, Cur
 
             button.FlatStyle = FlatStyle.Flat;
 
@@ -156,6 +194,10 @@ namespace Puzzle_Game
             button.FlatAppearance.BorderSize = 2;
 
             button.Dock = DockStyle.Fill;
+
+            button.Enabled = false;
+
+            button.Click += new EventHandler(SwitchSelectedButton);
 
             return button;
 
@@ -285,13 +327,79 @@ namespace Puzzle_Game
 
         }
 
+        void EnableOrDisableSorroundBlankButton(bool Enable)
+        {
+
+            var PosBlank = BlankButton.Tag as ButtonPosition;
+
+            // Get Row And Column Index.
+            int Row = PosBlank.CurrentPosition.Row;
+            int Col = PosBlank.CurrentPosition.Col;
+
+            if (Row > 0)
+                listImageButtons[Row - 1][Col].Enabled = Enable; // Up
+            if (Col > 0)
+                listImageButtons[Row][Col - 1].Enabled = Enable; // Left
+            if (Row < GameSettings.Rows - 1)
+                listImageButtons[Row + 1][Col].Enabled = Enable; // Down
+            if (Col < GameSettings.Columns - 1)
+                listImageButtons[Row][Col + 1].Enabled = Enable; // Right
+
+        }
+
+        void SelectAndSetBlankButton()
+        {
+
+            Random rdm = new Random();
+
+            // Get Random Row And Column.
+            int Row = rdm.Next(0, GameSettings.Rows);
+            int Col = rdm.Next(0, GameSettings.Columns);
+
+            // Assign Current Buttons TO 'BlankButton'.
+            BlankButton = listImageButtons[Row][Col];
+
+            // Enable Buttons That Sorround Blank Button.
+            EnableOrDisableSorroundBlankButton(true);
+
+            // Change Background Image Of 'BlankButton'.
+            BlankButton.BackgroundImage = null;
+
+        }
+
+        void SwapButtons(Button btn1, Button btn2)
+        {
+
+            if (btn1 == btn2)
+                return;
+
+            // Get Position Of Both Buttons.
+            var Pos1 = btn1.Tag as ButtonPosition;
+            var Pos2 = btn2.Tag as ButtonPosition;
+
+            // Swap Current Posistions Of Both.
+            var TempPos = Pos1.OriginalPosition;
+            Pos1.OriginalPosition = Pos2.OriginalPosition;
+            Pos2.OriginalPosition = TempPos;
+
+            // Swap Both Buttons.
+            var image = btn1.BackgroundImage;
+            btn1.BackgroundImage = btn2.BackgroundImage;
+            btn2.BackgroundImage = image;
+
+            // Refresh UI.
+            btn1.Refresh();
+            btn2.Refresh();
+
+        }
+
         void ShuffleImageButtonsList()
         {
             // Define Random Variable.
             Random rnd = new Random();
 
             // Shuffle Array Randomly By Selecting 2 Elements And Swapping Them For 'n' Elements Once.
-            for (int i = 0; i < listImageButtons.Count; ++i)
+            for (int i = 0; i < tlp.Controls.Count; ++i)
             {
                 // Row1 & Col1 Are Repersenting One Random Element In The List.
                 int Row1 = rnd.Next(0, GameSettings.Rows),
@@ -301,10 +409,8 @@ namespace Puzzle_Game
                 int Row2 = rnd.Next(0, GameSettings.Rows),
                     Col2 = rnd.Next(0, GameSettings.Columns);
 
-                // Swap Both Buttons.
-                Button button = listImageButtons[Row1][Col1];
-                listImageButtons[Row1][Col1] = listImageButtons[Row2][Col2];
-                listImageButtons[Row2][Col2] = button;
+                SwapButtons(listImageButtons[Row1][Col1],
+                    listImageButtons[Row2][Col2]);
 
             }
 
@@ -313,76 +419,110 @@ namespace Puzzle_Game
         void GameScreenStatus()
         {
             
-            if (tsEasyMode.Checked)
+            if (tsEasyMode.Checked) // Easy Mode.
                 lblGSMode.Text = tsEasyMode.Tag.ToString();
-            else if (tsMediumMode.Checked)
+            else if (tsMediumMode.Checked) // Medium Mode.
                 lblGSMode.Text = tsMediumMode.Tag.ToString();
-            else if (tsHardMode.Checked)
+            else if (tsHardMode.Checked) // Hard Mode.
                 lblGSMode.Text = tsHardMode.Tag.ToString();
-            else
+            else // Custom Mode.
                 lblGSMode.Text = tsCustomMode.Tag.ToString();
 
+            // Update Rows And Columns Status.
             lblGSRows.Text = GameSettings.Rows.ToString();
             lblGSColumns.Text = GameSettings.Columns.ToString();
+            // Update Result Status.
             lblGSResult.ForeColor = Color.MediumSlateBlue;
             lblGSResult.Text = "Pending";
+            // Hide Play Again Button.
             btnGSPlayAgain.Visible = false;
 
+        }
+
+        void RunTimer()
+        {
+            tmr.Interval = 1;
+            tmr.Enabled = true;
+            TimeTicksCounter = 0;
         }
 
         void CreateGameMode()
         {
             GameScreenStatus();
             CreateImageButtonsList();
-            ShuffleImageButtonsList();
             EditDimensionsIntlp();
             EditPictureBoxAndtlpSize();
             AddlistImageButtonsTotlp();
+            ShuffleImageButtonsList();
+            SelectAndSetBlankButton();
             pbOriginalImage.Image = GameSettings.Image;
             CheckWinning();
+            RunTimer();
         }
 
         bool IsPlayerWon()
         {
 
-            // Rows Loop.
-            for (int Row = 0; Row < GameSettings.Rows; Row++)
-            {
-                // Columns Loop
-                for (int Column = 0; Column < GameSettings.Columns; Column++)
-                {
-                    // Check If Current Button Is In The Right Position.
-                    if (listImageButtons[Row][Column].Tag.ToString() != string.Format($"{Row}_{Column}"))
-                        return false; // Not Won Yet.
+            //// Rows Loop.
+            //for (int Row = 0; Row < GameSettings.Rows; Row++)
+            //{
+            //    // Columns Loop
+            //    for (int Column = 0; Column < GameSettings.Columns; Column++)
+            //    {
+            //        // Check If It`s a Blank Button
+            //        if (listImageButtons[Row][Column].BackgroundImage == null)
+            //            continue;
+            //        // Check If Current Button Is In The Right Position.
+            //        if (!listImageButtons[Row][Column].Equals((Row, Column)))
+            //            return false; // Not Won Yet.
 
-                }
+            //    }
+
+            //}
+
+            // Loop Through Each Control In 'tlp' And Check Its Position.
+            foreach (Button item in tlp.Controls)
+            {
+
+                var Pos = item.Tag as ButtonPosition;
+
+                // Current Should Be Equal To Original For Winning.
+                if (Pos.CurrentPosition != Pos.OriginalPosition)
+                    return false; // Lost
 
             }
-            
+
             return true; // Won.
 
+        }
+
+        void StopTimer()
+        {
+            tmr.Enabled = false;
         }
 
         void WonGame()
         {
             // Game Win Setting.
             tlp.Enabled = false;
-            MessageBox.Show("You Won!", "GG",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
             lblGSResult.Text = "Won";
             lblGSResult.ForeColor = Color.FromArgb(253, 202, 0);
             btnGSPlayAgain.Visible = true;
+            StopTimer();
+            MessageBox.Show("You Won!", "GG",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         void LostGame()
         {
             // Game Lose Setting.
             tlp.Enabled = false;
-            MessageBox.Show("You Lost ;(", "Bad News",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
             lblGSResult.Text = "Lost";
             lblGSResult.ForeColor = Color.OrangeRed;
             btnGSPlayAgain.Visible = true;
+            StopTimer();
+            MessageBox.Show("You Lost ;(", "Bad News",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         void CheckWinning()
@@ -390,8 +530,8 @@ namespace Puzzle_Game
             // Check If Player Won The Game.
             if (IsPlayerWon())
                 WonGame();
-            else
-                LostGame();
+            //else
+            //    LostGame();
 
         }
 
@@ -437,6 +577,53 @@ namespace Puzzle_Game
         }
 
         private void btnGSPlayAgain_Click(object sender, EventArgs e)
+        {
+            CreateGameMode();
+        }
+
+        private void tmr_Tick(object sender, EventArgs e)
+        {
+
+            ++TimeTicksCounter;
+
+            int Seconds = TimeTicksCounter / 60 % 60;
+            int Minutes = TimeTicksCounter / 3600 % 60;
+
+            lblGSTime.Text = string.Format("{0}:{1:D2}", Minutes, Seconds);
+
+        }
+
+        void UpdateBlankButtonPosition()
+        {
+
+            foreach (var itemrow in listImageButtons)
+            {
+
+                foreach (var itemcol in itemrow)
+                {
+
+                    if (itemcol.BackgroundImage == null)
+                    {
+                        BlankButton = itemcol;
+                        break;
+                    }
+
+                }
+
+            }
+
+        }
+
+        private void btnGSShuffle_Click(object sender, EventArgs e)
+        {
+            EnableOrDisableSorroundBlankButton(false);
+            ShuffleImageButtonsList();
+            UpdateBlankButtonPosition();
+            EnableOrDisableSorroundBlankButton(true);
+            CheckWinning();
+        }
+
+        private void guna2GradientButton1_Click(object sender, EventArgs e)
         {
             tc.SelectTab(0);
         }
