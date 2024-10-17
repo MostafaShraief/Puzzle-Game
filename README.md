@@ -15,7 +15,7 @@ ranging from easy to hard, providing a progressive challenge as you enhance your
 Test your limits and see how quickly you can solve the puzzles!
 
 - **Custom Level:** The game let you design your own challenge as you want,
-and let choose **custom image** as well!
+and let you choose **custom image** as well!
 
 - **Intuitive Controls:** The user-friendly interface makes it easy to navigate and play, 
 ensuring that both new and experienced players can jump right in.
@@ -27,7 +27,7 @@ ensuring that both new and experienced players can jump right in.
 4. Rearrange the pieces until the original image is restored.
 5. Complete the puzzle as quickly as possible to achieve a high score!
 
-Get ready to challenge your mind and have fun with Picture Perfect! May the best puzzler win!
+Get ready to challenge your mind and have fun with **Sliding Puzzle**! May the best puzzler win!
 
 ## ⬇️ Download
 [Download](https://github.com/MostafaShraief/Sliding-Puzzle/raw/refs/heads/master/Sliding%20Game%20V1.0/Sliding%20Puzzle.zip)
